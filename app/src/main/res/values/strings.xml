@@ -18,4 +18,5 @@
     <string name="ausente">Ausente</string>
     <string name="presente">Presente</string>
     <string name="nao_confirmado">Não Confirmado</string>
+    <string name="nome_do_convidado">Nome do Convidado…</string>
 </resources>

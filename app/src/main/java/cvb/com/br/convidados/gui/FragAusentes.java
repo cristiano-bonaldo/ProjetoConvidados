@@ -1,4 +1,4 @@
-package cvb.com.br.convidados;
+package cvb.com.br.convidados.gui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class FragPresentes extends Fragment {
+import cvb.com.br.convidados.R;
+
+public class FragAusentes extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,6 +16,6 @@ public class FragPresentes extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_presentes, container, false);
+        return inflater.inflate(R.layout.fragment_ausentes, container, false);
     }
 }
