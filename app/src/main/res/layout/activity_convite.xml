@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:gravity="center"
+    tools:context=".ActConvite">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nome" />
+
+    <EditText
+        android:id="@+id/ed_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/confirmacao" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rb_todos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/nao_confirmado"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_presentes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/presente"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_ausentes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ausente"
+            />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/bt_gravar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/gravar"
+        />
+
+
+</LinearLayout>
