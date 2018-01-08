@@ -13,13 +13,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import cvb.com.br.convidados.R;
 
@@ -39,16 +42,12 @@ public class ActPrincipal extends AppCompatActivity {
         }
     }
 
+    // Firebase - Analytics
+    private FirebaseAnalytics mFirebaseAnalytics;
+
     //============================================
 
     private ViewHolder vh = new ViewHolder();
-
-    /*
-    -------------------
-    Objeto AdMob - Publicidade
-    -------------------
-    */
-    private AdView mAdView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,8 @@ public class ActPrincipal extends AppCompatActivity {
         vh.init();
 
         adicaoPublicidadeAdMob();
+
+        adicaoFirebase();
 
         setSupportActionBar(vh.toolbar);
 
@@ -73,12 +74,17 @@ public class ActPrincipal extends AppCompatActivity {
         setFragment(new FragTodos());
     }
 
+    private void adicaoFirebase() {
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, null);
+    }
+
     private void adicaoPublicidadeAdMob() {
         //Publicidade AdMob
         String AdMob_ID_APP = "ca-app-pub-1791259810056092~3359783446";
         MobileAds.initialize(this, AdMob_ID_APP);
 
-        mAdView = this.findViewById(R.id.adview);
+        AdView mAdView = this.findViewById(R.id.adview);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
     }
@@ -106,10 +112,43 @@ public class ActPrincipal extends AppCompatActivity {
 
             Class fragmentClass;
             if (id == R.id.nav_todos) {
+                /*
+                Firebase - Analytics - Inicio
+                */
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "id_nav_todos");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ItemSelected");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 fragmentClass = FragTodos.class;
             } else if (id == R.id.nav_presentes) {
+                /*
+                Firebase - Analytics - Inicio
+                */
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "id_nav_presentes");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ItemSelected");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
                 fragmentClass = FragPresentes.class;
             } else if (id == R.id.nav_ausentes) {
+
+                /*
+                Firebase - Analytics - Inicio
+                */
+                Bundle bundle = new Bundle();
+                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "id_nav_presentes");
+                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ItemSelected");
+                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+
+                /*
+                Firebase - Crashlytics
+                --
+                Forçar ERRO
+                String erro = null;
+                Log.i("CVB", "Erro nao tratado -> Crash do App" + erro.length());
+                */
+
                 fragmentClass = FragAusentes.class;
             } else {
                 return true;
@@ -153,6 +192,23 @@ public class ActPrincipal extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.menu_config) {
+            /*
+            Firebase - Crashlytics - Inicio
+            --
+            Log para erros tratatos
+            */
+            String msgErro = null;
+            try {
+                int x = msgErro.length();
+            } catch (Exception E) {
+                Log.i("CVB", "Erro -> Gerar Crashlytics");
+                Crashlytics.log("Erro Tratado - onOptionsItemSelected");
+                Crashlytics.logException(E);
+            }
+            /*
+            Firebase - Crashlytics - Fim
+            */
+
             return true;
         }
 

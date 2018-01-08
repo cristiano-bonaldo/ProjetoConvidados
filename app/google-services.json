@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "778037852118",
+    "firebase_url": "https://convidados-6260f.firebaseio.com",
+    "project_id": "convidados-6260f",
+    "storage_bucket": "convidados-6260f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778037852118:android:33380cfd3842c9cb",
+        "android_client_info": {
+          "package_name": "cvb.com.br.convidados"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778037852118-v5ashrergm98hddj9mmnt6jch5v3l3m7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cvb.com.br.convidados",
+            "certificate_hash": "eb11d7e336fc40a1f8cd115f3f9d3acd089d1ccd"
+          }
+        },
+        {
+          "client_id": "778037852118-mm51a37pq2jc4srlffpvmp1tg6b3scq6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCSIO9cvp5eX6NoZJfev0BajKke1ttLMQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778037852118-mm51a37pq2jc4srlffpvmp1tg6b3scq6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
