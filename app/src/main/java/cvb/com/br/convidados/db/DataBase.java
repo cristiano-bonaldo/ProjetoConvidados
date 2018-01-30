@@ -17,7 +17,7 @@ public class DataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(TabConvidado.C_TABLE_NAME);
+        db.execSQL(TabConvidado.C_SCRIPT_V1);
     }
 
     @Override

@@ -2,6 +2,8 @@ package cvb.com.br.convidados.model;
 
 public class Convidado {
 
+    public static final int C_CONVIDADO_TODOS          = -1;
+
     public static final int C_CONVIDADO_NAO_CONFIRMADO = 0;
     public static final int C_CONVIDADO_PRESENTE       = 1;
     public static final int C_CONVIDADO_AUSENTE        = 2;

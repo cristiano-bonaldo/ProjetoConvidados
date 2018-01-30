@@ -12,6 +12,7 @@ import android.widget.RadioButton;
 import cvb.com.br.convidados.R;
 import cvb.com.br.convidados.control.ControlConvidado;
 import cvb.com.br.convidados.model.Convidado;
+import cvb.com.br.convidados.util.ToastUtil;
 
 public class ActConvite extends AppCompatActivity {
 
@@ -57,6 +58,9 @@ public class ActConvite extends AppCompatActivity {
     View.OnClickListener btGravarListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            if (!this.valicacao())
+                return;
+
             int status;
             if (vh.rbNaoConfirmado.isChecked())
                 status = Convidado.C_CONVIDADO_NAO_CONFIRMADO;
@@ -68,7 +72,21 @@ public class ActConvite extends AppCompatActivity {
             Convidado convidado = new Convidado(vh.edName.getText().toString(), status);
 
             ControlConvidado ctrConvidado = new ControlConvidado();
-            ctrConvidado.inserir(getContext(), convidado);
+            if (ctrConvidado.inserir(getContext(), convidado)) {
+                ToastUtil.showMessage(getContext(), "Processo de gravação realizado com sucesso!");
+                finish();
+            }
+            else
+                ToastUtil.showMessage(getContext(), "Erro ao executar processo de gravação!");
+        }
+
+        private boolean valicacao() {
+            if (vh.edName.getText().toString().isEmpty()) {
+                vh.edName.setError(getString(R.string.valida_nome));
+                return false;
+            }
+
+            return true;
         }
     };
 }
