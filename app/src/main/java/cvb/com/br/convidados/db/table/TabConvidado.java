@@ -36,6 +36,14 @@ public class TabConvidado {
         return db.insert(C_TABLE_NAME, null, getContentValues(convidado));
     }
 
+    public long atualizar(Convidado convidado) {
+        return db.update(C_TABLE_NAME, getContentValues(convidado), TabConvidado.C_FIELD_ID + " = ? ", new String[] { String.valueOf(convidado.getId()) } );
+    }
+
+    public long excluir(int id) {
+        return db.delete(C_TABLE_NAME, TabConvidado.C_FIELD_ID + " = ? ", new String[] { String.valueOf(id) } );
+    }
+
     private ContentValues getContentValues(Convidado convidado) {
         ContentValues cv = new ContentValues();
         cv.put(TabConvidado.C_FIELD_NAME, convidado.getName());
@@ -47,12 +55,12 @@ public class TabConvidado {
     public List<Convidado> getList(int status) {
         ArrayList<Convidado> lista = new ArrayList<>();
 
-        Cursor c = null;
+        Cursor c;
         try {
             if (status == Convidado.C_CONVIDADO_NAO_CONFIRMADO ||
                 status == Convidado.C_CONVIDADO_PRESENTE ||
                 status == Convidado.C_CONVIDADO_AUSENTE)
-                c = db.query(C_TABLE_NAME, null,C_FIELD_STATUS + " = ?", new String [status], null, null, C_FIELD_NAME);
+                c = db.query(C_TABLE_NAME, null,C_FIELD_STATUS + " = ?", new String[] { String.valueOf(status) }, null, null, C_FIELD_NAME);
             else
                 c = db.query(C_TABLE_NAME, null,null, null, null, null, C_FIELD_NAME);
 
@@ -60,7 +68,7 @@ public class TabConvidado {
                 return lista;
 
             while (c.moveToNext()) {
-                lista.add(new Convidado(c.getString(c.getColumnIndex(C_FIELD_NAME)), c.getInt(c.getColumnIndex(C_FIELD_STATUS))));
+                lista.add(new Convidado(c.getInt(c.getColumnIndex(C_FIELD_ID)), c.getString(c.getColumnIndex(C_FIELD_NAME)), c.getInt(c.getColumnIndex(C_FIELD_STATUS))));
             }
 
             if (c != null)
@@ -71,5 +79,28 @@ public class TabConvidado {
         }
 
         return lista;
+    }
+
+    public Convidado getID(int id) {
+        Convidado convidado = null;
+
+        Cursor c = null;
+        try {
+            c = db.query(C_TABLE_NAME, null, C_FIELD_ID + " = ?", new String[] {String.valueOf(id) }, null, null, C_FIELD_NAME);
+
+            if (c == null || c.getCount() == 0)
+                return null;
+
+            if (c.moveToNext()) {
+                convidado = new Convidado(c.getInt(c.getColumnIndex(C_FIELD_ID)), c.getString(c.getColumnIndex(C_FIELD_NAME)), c.getInt(c.getColumnIndex(C_FIELD_STATUS)));
+            }
+        } catch (Exception E) {
+            return null;
+        } finally {
+            if (c != null && !c.isClosed())
+                c.close();
+        }
+
+        return convidado;
     }
 }

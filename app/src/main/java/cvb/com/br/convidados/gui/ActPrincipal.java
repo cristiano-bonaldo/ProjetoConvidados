@@ -108,48 +108,33 @@ public class ActPrincipal extends AppCompatActivity {
     NavigationView.OnNavigationItemSelectedListener navigationViewListener = new NavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            /*
+            Firebase - Crashlytics
+            --
+            Forçar ERRO
+            String erro = null;
+            Log.i("CVB", "Erro nao tratado -> Crash do App" + erro.length());
+            */
+
             int id = item.getItemId();
 
             Class fragmentClass;
             if (id == R.id.nav_todos) {
-                /*
-                Firebase - Analytics - Inicio
-                */
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "id_nav_todos");
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ItemSelected");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
+                fireBaseSelectContent("id_nav_todos", "ItemSelected");
                 fragmentClass = FragTodos.class;
+
             } else if (id == R.id.nav_presentes) {
-                /*
-                Firebase - Analytics - Inicio
-                */
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "id_nav_presentes");
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ItemSelected");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
+                fireBaseSelectContent("id_nav_presentes", "ItemSelected");
                 fragmentClass = FragPresentes.class;
+
             } else if (id == R.id.nav_ausentes) {
-
-                /*
-                Firebase - Analytics - Inicio
-                */
-                Bundle bundle = new Bundle();
-                bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "id_nav_presentes");
-                bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "ItemSelected");
-                mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-
-                /*
-                Firebase - Crashlytics
-                --
-                Forçar ERRO
-                String erro = null;
-                Log.i("CVB", "Erro nao tratado -> Crash do App" + erro.length());
-                */
-
+                fireBaseSelectContent("id_nav_ausentes", "ItemSelected");
                 fragmentClass = FragAusentes.class;
+
+            } else if (id == R.id.nav_nao_confirmados) {
+                fireBaseSelectContent("id_nav_nao_confirmados", "ItemSelected");
+                fragmentClass = FragAusentes.class;
+
             } else {
                 return true;
             }
@@ -170,6 +155,16 @@ public class ActPrincipal extends AppCompatActivity {
             return true;
         }
     };
+
+    private void fireBaseSelectContent(String id, String content) {
+        /*
+        Firebase - Analytics - Inicio
+        */
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, content);
+        mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
+    }
 
     @Override
     public void onBackPressed() {

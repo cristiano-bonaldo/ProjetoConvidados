@@ -15,21 +15,41 @@ public class DAOConvidado {
         tabConvidado = new TabConvidado(ctx);
     }
 
-    public boolean inserir(Convidado convidado) {
+    public boolean insert(Convidado convidado) {
         long id = tabConvidado.inserir(convidado);
 
         return (id >= 0);
     }
 
-    public List<Convidado> getListTodos() {
-        return tabConvidado.getList(Convidado.C_CONVIDADO_TODOS);
+    public boolean update(Convidado convidado) {
+        long qtd = tabConvidado.atualizar(convidado);
+
+        return (qtd >= 0);
     }
 
-//    public List<Convidado> getListTodos() {
-//        return tabConvidado.getList(Convidado.C_CONVIDADO_TODOS);
-//    }
-//
-//    public List<Convidado> getListTodos() {
-//        return tabConvidado.getList(Convidado.C_CONVIDADO_TODOS);
-//    }
+    public boolean delete(int id) {
+        long qtd = tabConvidado.excluir(id);
+
+        return (qtd >= 0);
+    }
+
+    public List<Convidado> getListTodos() {
+        return getListConvidado(Convidado.C_CONVIDADO_TODOS);
+    }
+
+    public List<Convidado> getListAusentes() {
+        return getListConvidado(Convidado.C_CONVIDADO_AUSENTE);
+    }
+
+    public List<Convidado> getListPresentes() {
+        return getListConvidado(Convidado.C_CONVIDADO_PRESENTE);
+    }
+
+    private List<Convidado> getListConvidado(int tipo) {
+        return tabConvidado.getList(tipo);
+    }
+
+    public Convidado getConvidadoByID(int id) {
+        return tabConvidado.getID(id);
+    }
 }

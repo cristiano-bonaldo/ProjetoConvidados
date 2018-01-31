@@ -8,7 +8,7 @@ public class Convidado {
     public static final int C_CONVIDADO_PRESENTE       = 1;
     public static final int C_CONVIDADO_AUSENTE        = 2;
 
-    private long id;
+    private int id;
     private String name;
     private int status;
 
@@ -18,11 +18,17 @@ public class Convidado {
         this.status = status;
     }
 
-    public long getId() {
+    public Convidado(int id, String name, int status) {
+        this.id     = id;
+        this.name   = name;
+        this.status = status;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -40,5 +46,17 @@ public class Convidado {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public boolean isPresente() {
+        return (status == Convidado.C_CONVIDADO_PRESENTE);
+    }
+
+    public boolean isAusente() {
+        return (status == Convidado.C_CONVIDADO_AUSENTE);
+    }
+
+    public boolean isNaoConfirmado() {
+        return (status == Convidado.C_CONVIDADO_NAO_CONFIRMADO);
     }
 }

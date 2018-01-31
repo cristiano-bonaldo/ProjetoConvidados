@@ -16,5 +16,9 @@
             android:id="@+id/nav_ausentes"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/ausentes" />
+        <item
+            android:id="@+id/nav_nao_confirmados"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/nao_confirmado" />
     </group>
 </menu>

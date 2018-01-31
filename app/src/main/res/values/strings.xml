@@ -9,6 +9,7 @@
     <string name="ausentes">Ausentes</string>
     <string name="presentes">Presentes</string>
     <string name="todos">Todos</string>
+    <string name="nao_confirmados">Não Confirmados</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -20,4 +21,13 @@
     <string name="nao_confirmado">Não Confirmado</string>
     <string name="nome_do_convidado">Nome do Convidado…</string>
     <string name="valida_nome">O campo NOME deve ser informado!</string>
+    <string name="remocao_convidado">Remoção de Convidado</string>
+    <string name="remocao_convido_msg">Deseja realmente remover o convidado?</string>
+    <string name="bt_sim">Sim</string>
+    <string name="bt_nao">Não</string>
+    <string name="exclusao_ok">Processo de exclusão realizado com sucesso!</string>
+    <string name="exclusao_erro">Erro ao executar processo de exclusão!</string>
+    <string name="gravacao_ok">Processo de gravação realizado com sucesso!</string>
+    <string name="gravacao_erro">Erro ao executar processo de gravação!</string>
+    <string name="total">Total</string>
 </resources>
