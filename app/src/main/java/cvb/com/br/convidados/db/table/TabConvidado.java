@@ -28,8 +28,8 @@ public class TabConvidado {
 
     private SQLiteDatabase db;
 
-    public TabConvidado(Context ctx) {
-        db = DAOUtil.getInstance(ctx).getDB();
+    public TabConvidado(SQLiteDatabase db) {
+        this.db = db;
     }
 
     public long inserir(Convidado convidado) {
@@ -79,6 +79,32 @@ public class TabConvidado {
         }
 
         return lista;
+    }
+
+    public int getRecordCount(int status) {
+        int qtd = 0;
+
+        Cursor c;
+        try {
+            if (status == Convidado.C_CONVIDADO_TODOS)
+                c = db.rawQuery("SELECT count(*) FROM " + TabConvidado.C_TABLE_NAME, null);
+            else
+                c = db.rawQuery("SELECT count(*) FROM " + TabConvidado.C_TABLE_NAME + " WHERE " + C_FIELD_STATUS + " = ?" , new String[] { String.valueOf(status) });
+
+            if (c == null || c.getCount() == 0)
+                return qtd;
+
+            while (c.moveToNext())
+                qtd = c.getInt(0);
+
+            if (c != null)
+                c.close();
+        }
+        catch (Exception E) {
+            return qtd;
+        }
+
+        return qtd;
     }
 
     public Convidado getID(int id) {

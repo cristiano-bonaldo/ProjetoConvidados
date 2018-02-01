@@ -10,28 +10,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/colorPrimaryDark"
         >
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/nao_confirmados"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_nao_confirmado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:text="0"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:text="@string/presentes"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             />
 
         <TextView
+            android:id="@+id/tv_presente"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/ausentes"
+            android:text="0"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
             />
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Total"
-            />
     </LinearLayout>
 
     <LinearLayout
@@ -40,27 +67,90 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/ll_status_header"
+        android:background="@color/colorPrimaryDark"
         >
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/presentes"
-            />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/ausentes"
-            />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:text="@string/total"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_total"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="@string/ausentes"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_ausente"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="0"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/view_separador"
+        android:background="@color/colorPrimaryDark"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ll_status"
+        android:layout_margin="3dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/view_separador"
+        android:gravity="center_horizontal|center_vertical"
+        >
+
+        <ImageView
+            android:id="@+id/iv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_excluir"
+            android:layout_marginRight="2dp"
+            />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/todos"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"
             />
     </LinearLayout>
 
@@ -68,6 +158,6 @@
         android:id="@+id/recyclerview_convidados"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/ll_status"
+        android:layout_below="@+id/ll_title"
         />
 </RelativeLayout>

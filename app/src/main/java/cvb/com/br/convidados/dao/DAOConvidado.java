@@ -12,7 +12,7 @@ public class DAOConvidado {
     private TabConvidado tabConvidado;
 
     public DAOConvidado(Context ctx) {
-        tabConvidado = new TabConvidado(ctx);
+        tabConvidado = new TabConvidado(DAOUtil.getInstance(ctx).getDB());
     }
 
     public boolean insert(Convidado convidado) {
@@ -45,8 +45,16 @@ public class DAOConvidado {
         return getListConvidado(Convidado.C_CONVIDADO_PRESENTE);
     }
 
+    public List<Convidado> getListNaoConfirmados() {
+        return getListConvidado(Convidado.C_CONVIDADO_NAO_CONFIRMADO);
+    }
+
     private List<Convidado> getListConvidado(int tipo) {
         return tabConvidado.getList(tipo);
+    }
+
+    public int getQtdConvidado(int tipo) {
+        return tabConvidado.getRecordCount(tipo);
     }
 
     public Convidado getConvidadoByID(int id) {

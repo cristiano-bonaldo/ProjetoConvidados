@@ -11,8 +11,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Hashtable;
 import java.util.List;
 
 import cvb.com.br.convidados.R;
@@ -25,14 +27,31 @@ public abstract class FragBase extends Fragment {
     public class ViewHolderTela {
         RecyclerView rc;
 
+        TextView tvNaoConfirmado;
+        TextView tvPresente;
+        TextView tvAusente;
+        TextView tvTotal;
+
+        ImageView ivTitle;
+        TextView  tvTitle;
+
         private void init(View v) {
             rc = v.findViewById(R.id.recyclerview_convidados);
+
+            tvNaoConfirmado = v.findViewById(R.id.tv_nao_confirmado);
+            tvPresente      = v.findViewById(R.id.tv_presente);
+            tvAusente       = v.findViewById(R.id.tv_ausente);
+            tvTotal         = v.findViewById(R.id.tv_total);
+
+            ivTitle = v.findViewById(R.id.iv_title);
+            tvTitle = v.findViewById(R.id.tv_title);
         }
     }
 
-    private ViewHolderTela vh = new ViewHolderTela();
-
     //------------------------------------------------------------------
+
+    private ViewHolderTela vh = new ViewHolderTela();
+    private Context ctx;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,34 +63,60 @@ public abstract class FragBase extends Fragment {
         View v = inflater.inflate(R.layout.fragment_base, container, false);
         vh.init(v);
 
-        final Context ctx = v.getContext();
-
-        ListConvidadosEvent listConvidadosEvent = new ListConvidadosEvent() {
-            @Override
-            public void onConvidadoClick(int id) {
-                Intent it = new Intent(ctx, ActConvite.class);
-                it.putExtra(Constant.EXTRA_ID, id);
-
-                startActivity(it);
-            }
-
-            @Override
-            public void onConvidadoDelete(int id) {
-                ControlConvidado ctrConvidado = new ControlConvidado();
-                if (ctrConvidado.delete(getContext(), id))
-                    ToastUtil.showMessage(getContext(), getString(R.string.exclusao_ok));
-                else
-                    ToastUtil.showMessage(getContext(), getString(R.string.exclusao_erro));
-            }
-        };
+        ctx = v.getContext();
 
         vh.rc.setLayoutManager(new LinearLayoutManager(ctx));
 
+        return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        loadPainel();
+        loadData();
+    }
+
+    private ListConvidadosEvent listConvidadosEvent = new ListConvidadosEvent() {
+        @Override
+        public void onConvidadoClick(int id) {
+            Intent it = new Intent(ctx, ActConvite.class);
+            it.putExtra(Constant.EXTRA_ID, id);
+
+            startActivity(it);
+        }
+
+        @Override
+        public void onConvidadoDelete(int id) {
+            ControlConvidado ctrConvidado = new ControlConvidado();
+            if (ctrConvidado.delete(ctx, id)) {
+                ToastUtil.showMessage(ctx, getString(R.string.exclusao_ok));
+
+                loadPainel();
+                loadData();
+            }
+            else
+                ToastUtil.showMessage(ctx, getString(R.string.exclusao_erro));
+        }
+    };
+
+    private void loadData() {
         List<Convidado> listConvidados = getListaConvidados(ctx);
 
         RecyclerView.Adapter adapter = new AdpterConvidados(ctx, listConvidados, listConvidadosEvent);
         vh.rc.setAdapter(adapter);
-        return v;
+
+        adapter.notifyDataSetChanged();
+    }
+
+    private void loadPainel() {
+        Hashtable<Integer, Integer> hashtable = (new ControlConvidado()).getQtdConvidados(ctx);
+
+        vh.tvNaoConfirmado.setText(String.valueOf(hashtable.get(Convidado.C_CONVIDADO_NAO_CONFIRMADO)));
+        vh.tvTotal.setText(String.valueOf(hashtable.get(Convidado.C_CONVIDADO_TODOS)));
+        vh.tvAusente.setText(String.valueOf(hashtable.get(Convidado.C_CONVIDADO_AUSENTE)));
+        vh.tvPresente.setText(String.valueOf(hashtable.get(Convidado.C_CONVIDADO_PRESENTE)));
     }
 
     public abstract List<Convidado> getListaConvidados(Context ctx);
@@ -87,13 +132,15 @@ public abstract class FragBase extends Fragment {
 
     private class ViewHolderConvidado extends RecyclerView.ViewHolder {
         private TextView tvNome;
+        private ImageView ivExcluir;
         private Context ctx;
 
         public ViewHolderConvidado(Context ctx, View view) {
             super(view);
             this.ctx = ctx;
 
-            tvNome = view.findViewById(R.id.tv_nome);
+            tvNome    = view.findViewById(R.id.tv_nome);
+            ivExcluir = view.findViewById(R.id.iv_excluir);
         }
 
         public void bind(final Convidado convidado, final ListConvidadosEvent listConvidadosEvent) {
@@ -105,6 +152,25 @@ public abstract class FragBase extends Fragment {
                 }
             });
 
+            ivExcluir.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
+                    dialog.setTitle(R.string.remocao_convidado);
+                    dialog.setMessage(R.string.remocao_convido_msg);
+                    dialog.setIcon(android.R.drawable.ic_delete);
+                    dialog.setPositiveButton(R.string.bt_sim, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            listConvidadosEvent.onConvidadoDelete(convidado.getId());
+                        }
+                    });
+                    dialog.setNegativeButton(R.string.bt_nao, null);
+                    dialog.show();
+                }
+            });
+
+            /*
             tvNome.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
@@ -124,6 +190,7 @@ public abstract class FragBase extends Fragment {
                     return true;
                 }
             });
+            */
         }
     }
 

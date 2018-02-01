@@ -133,7 +133,7 @@ public class ActPrincipal extends AppCompatActivity {
 
             } else if (id == R.id.nav_nao_confirmados) {
                 fireBaseSelectContent("id_nav_nao_confirmados", "ItemSelected");
-                fragmentClass = FragAusentes.class;
+                fragmentClass = FragNaoConfirmados.class;
 
             } else {
                 return true;
