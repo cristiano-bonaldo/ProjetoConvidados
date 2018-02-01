@@ -1,23 +1,21 @@
 package cvb.com.br.convidados.db.table;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cvb.com.br.convidados.dao.DAOUtil;
 import cvb.com.br.convidados.model.Convidado;
 
 public class TabConvidado {
 
-    public static String C_TABLE_NAME = "CONVIDADOS";
+    private static String C_TABLE_NAME = "CONVIDADOS";
 
-    public static String C_FIELD_ID     = "ID";
-    public static String C_FIELD_NAME   = "NAME";
-    public static String C_FIELD_STATUS = "STATUS";
+    private static String C_FIELD_ID     = "ID";
+    private static String C_FIELD_NAME   = "NAME";
+    private static String C_FIELD_STATUS = "STATUS";
 
     public static String C_SCRIPT_V1 =
             "CREATE TABLE " + C_TABLE_NAME + " (" +
@@ -55,7 +53,7 @@ public class TabConvidado {
     public List<Convidado> getList(int status) {
         ArrayList<Convidado> lista = new ArrayList<>();
 
-        Cursor c;
+        Cursor c = null;
         try {
             if (status == Convidado.C_CONVIDADO_NAO_CONFIRMADO ||
                 status == Convidado.C_CONVIDADO_PRESENTE ||
@@ -70,12 +68,13 @@ public class TabConvidado {
             while (c.moveToNext()) {
                 lista.add(new Convidado(c.getInt(c.getColumnIndex(C_FIELD_ID)), c.getString(c.getColumnIndex(C_FIELD_NAME)), c.getInt(c.getColumnIndex(C_FIELD_STATUS))));
             }
-
-            if (c != null)
-                c.close();
         }
         catch (Exception E) {
             return lista;
+        }
+        finally {
+            if (c != null)
+                c.close();
         }
 
         return lista;
@@ -84,7 +83,7 @@ public class TabConvidado {
     public int getRecordCount(int status) {
         int qtd = 0;
 
-        Cursor c;
+        Cursor c = null;
         try {
             if (status == Convidado.C_CONVIDADO_TODOS)
                 c = db.rawQuery("SELECT count(*) FROM " + TabConvidado.C_TABLE_NAME, null);
@@ -96,12 +95,13 @@ public class TabConvidado {
 
             while (c.moveToNext())
                 qtd = c.getInt(0);
-
-            if (c != null)
-                c.close();
         }
         catch (Exception E) {
             return qtd;
+        }
+        finally {
+            if (c != null)
+                c.close();
         }
 
         return qtd;

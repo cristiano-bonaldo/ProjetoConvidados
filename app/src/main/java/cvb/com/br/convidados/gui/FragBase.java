@@ -43,8 +43,8 @@ public abstract class FragBase extends Fragment {
             tvAusente       = v.findViewById(R.id.tv_ausente);
             tvTotal         = v.findViewById(R.id.tv_total);
 
-            ivTitle = v.findViewById(R.id.iv_title);
             tvTitle = v.findViewById(R.id.tv_title);
+            ivTitle = v.findViewById(R.id.iv_title);
         }
     }
 
@@ -52,6 +52,9 @@ public abstract class FragBase extends Fragment {
 
     private ViewHolderTela vh = new ViewHolderTela();
     private Context ctx;
+
+    protected String titleInfo;
+    protected int titleIDImage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,11 @@ public abstract class FragBase extends Fragment {
     private void loadPainel() {
         Hashtable<Integer, Integer> hashtable = (new ControlConvidado()).getQtdConvidados(ctx);
 
+        loadTitle(ctx);
+
+        vh.tvTitle.setText(titleInfo);
+        vh.ivTitle.setImageResource(titleIDImage);
+
         vh.tvNaoConfirmado.setText(String.valueOf(hashtable.get(Convidado.C_CONVIDADO_NAO_CONFIRMADO)));
         vh.tvTotal.setText(String.valueOf(hashtable.get(Convidado.C_CONVIDADO_TODOS)));
         vh.tvAusente.setText(String.valueOf(hashtable.get(Convidado.C_CONVIDADO_AUSENTE)));
@@ -120,12 +128,13 @@ public abstract class FragBase extends Fragment {
     }
 
     public abstract List<Convidado> getListaConvidados(Context ctx);
+    public abstract void loadTitle(Context ctx);
 
     //------------------------------------------------------------------
 
     private interface ListConvidadosEvent {
-        public void onConvidadoClick(int id);
-        public void onConvidadoDelete(int id);
+        void onConvidadoClick(int id);
+        void onConvidadoDelete(int id);
     }
 
     //------------------------------------------------------------------
@@ -158,7 +167,7 @@ public abstract class FragBase extends Fragment {
                     AlertDialog.Builder dialog = new AlertDialog.Builder(ctx);
                     dialog.setTitle(R.string.remocao_convidado);
                     dialog.setMessage(R.string.remocao_convido_msg);
-                    dialog.setIcon(android.R.drawable.ic_delete);
+                    dialog.setIcon(R.drawable.ic_excluir);
                     dialog.setPositiveButton(R.string.bt_sim, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

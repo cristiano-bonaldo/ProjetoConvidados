@@ -10,11 +10,11 @@
             android:title="@string/todos" />
         <item
             android:id="@+id/nav_presentes"
-            android:icon="@drawable/ic_ausentes"
+            android:icon="@drawable/ic_confirmados"
             android:title="@string/presentes" />
         <item
             android:id="@+id/nav_ausentes"
-            android:icon="@drawable/ic_confirmados"
+            android:icon="@drawable/ic_ausentes"
             android:title="@string/ausentes" />
         <item
             android:id="@+id/nav_nao_confirmados"

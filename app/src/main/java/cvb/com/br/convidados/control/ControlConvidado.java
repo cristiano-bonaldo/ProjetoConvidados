@@ -6,7 +6,6 @@ import java.util.Hashtable;
 import java.util.List;
 
 import cvb.com.br.convidados.dao.DAOConvidado;
-import cvb.com.br.convidados.db.table.TabConvidado;
 import cvb.com.br.convidados.model.Convidado;
 
 public class ControlConvidado {

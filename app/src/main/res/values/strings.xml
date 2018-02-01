@@ -30,4 +30,5 @@
     <string name="gravacao_ok">Processo de gravação realizado com sucesso!</string>
     <string name="gravacao_erro">Erro ao executar processo de gravação!</string>
     <string name="total">Total</string>
+    <string name="imagem_exclusao">imagem para exclusão</string>
 </resources>

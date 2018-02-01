@@ -10,6 +10,7 @@ public class DAOUtil {
     private static DAOUtil INSTANCE = null;
 
     private DAOUtil() {}
+
     private DataBase db;
 
     private DAOUtil(Context ctx) {

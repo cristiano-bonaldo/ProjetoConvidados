@@ -13,12 +13,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -69,9 +66,11 @@ public class ActPrincipal extends AppCompatActivity {
 
         vh.navigationView.setNavigationItemSelectedListener(navigationViewListener);
 
-        setListener();
+        MenuItem itemMenuInicial = vh.navigationView.getMenu().getItem(0);
+        itemMenuInicial.setChecked(true);
+        navigationViewListener.onNavigationItemSelected(itemMenuInicial);
 
-        setFragment(new FragTodos());
+        setListener();
     }
 
     private void adicaoFirebase() {
@@ -111,7 +110,7 @@ public class ActPrincipal extends AppCompatActivity {
             /*
             Firebase - Crashlytics
             --
-            Forçar ERRO
+            Forçar ERRO8
             String erro = null;
             Log.i("CVB", "Erro nao tratado -> Crash do App" + erro.length());
             */
@@ -176,6 +175,7 @@ public class ActPrincipal extends AppCompatActivity {
         }
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
@@ -187,28 +187,29 @@ public class ActPrincipal extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.menu_config) {
-            /*
-            Firebase - Crashlytics - Inicio
-            --
-            Log para erros tratatos
-            */
-            String msgErro = null;
-            try {
-                int x = msgErro.length();
-            } catch (Exception E) {
-                Log.i("CVB", "Erro -> Gerar Crashlytics");
-                Crashlytics.log("Erro Tratado - onOptionsItemSelected");
-                Crashlytics.logException(E);
-            }
-            /*
-            Firebase - Crashlytics - Fim
-            */
-
+            gerarErroCrashlytics();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
+    */
+
+    /*
+    private void gerarErroCrashlytics() {
+    // Firebase - Crashlytics - Inicio
+    // --
+    // Log para erros tratatos
+        String msgErro = null;
+        try {
+            int x = msgErro.length();
+        } catch (Exception E) {
+            Log.i("CVB", "Erro -> Gerar Crashlytics");
+            Crashlytics.log("Erro Tratado - onOptionsItemSelected");
+            Crashlytics.logException(E);
+        }
+    // Firebase - Crashlytics - Fim
+    }
+    */
 
     private void setFragment(Fragment fragment) {
         FragmentManager fm = getSupportFragmentManager();
